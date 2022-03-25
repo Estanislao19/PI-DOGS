@@ -1,0 +1,239 @@
+{/*import React from 'react';
+import {useState,useEffect} from 'react'
+import {getTemperament,postDogs} from '../actions';
+import {useDispatch,useSelector} from 'react-redux';
+import {Link} from 'react-router-dom'
+export default function DogBreedCreated () {
+    const dispatch = useDispatch();
+    const alltemperament = useSelector((state) => state.temperament)
+    const [input,setInput] = useState({
+        name: "",
+        minHeight: "",
+        maxHeight: "",
+        minWeight: "",
+        maxWeight: "",
+        minlife_span: "",
+        maxlife_span: "",
+        image: "",
+        temperament: [],
+
+    });
+    useEffect(() => {
+        dispatch(getTemperament())
+     },)
+        function handleChange(e){
+            setInput({
+                ...input,
+                [e.target.name] : e.target.value
+            })
+        }
+        function handleSelectTemperament(e) {
+  
+            
+              setInput({
+                ...input,
+                temperament: [...input.temperament, e.target.value],
+              });
+            } 
+            function handleSubmit(e) {
+                e.preventDefault();
+                dispatch(postDogs(input.value));
+                setInput({
+                name: "",
+                minHeight: "",
+                maxHeight: "",
+                minWeight: "",
+                maxWeight: "",
+                minlife_span: "",
+                maxlife_span: "",
+                image: "",
+                temperament: [],
+
+                });
+                alert('dog created')
+            }
+             
+            
+
+    return (
+<div>
+    <Link to="/home"><button>Volver</button></Link>
+    <h1>Create dog </h1>
+    <button type="submit" >Crear DOGI</button>
+    <form >
+        <div>
+            <label>Name:</label>
+            <input 
+            type='text'
+            value={input.name}
+            name='name'
+            onChange={(e)=>handleChange(e)}
+            />
+            <label >Height min:</label>
+              <input
+                type="number"
+                name="minHeight"
+                value={input.minHeight}
+                onChange={(e)=>handleChange(e)}
+                />
+                 <label >Height max:</label>
+              <input
+                type="number"
+                name="maxHeight"
+                value={input.maxHeight}
+                onChange={(e)=>handleChange(e)}
+                />
+                <label >Weight min:</label>
+              <input
+                type="number"
+                name="minWeight"
+                value={input.minWeight}
+                onChange={(e)=>handleChange(e)}
+                
+                />
+                 <label >Weight max:</label>
+              <input
+                type="number"
+                name="maxWeight"
+                value={input.maxWeight}
+                onChange={(e)=>handleChange(e)}
+                />
+                <label>Life span min:</label>
+              <input
+                type="number"
+                name="minlife_span"
+                value={input.minlife_span}
+                onChange={(e)=>handleChange(e)}
+                />
+                <label >Life span max:</label>
+              <input
+                type="number"
+                name="maxlife_span"
+                value={input.maxlife_span}
+                onChange={(e)=>handleChange(e)}
+                />
+                <label name="image" >
+                Image:
+              </label>
+              <input
+                name="image"
+                value={input.image}
+                placeholder='URL'
+                onChange={(e)=>handleChange(e)}
+                />
+             <div >
+            <label  >TEMPERAMENTS: </label>
+            <div >
+              <select
+                
+                
+              >
+                {alltemperament.map((temperament) => (
+                  <option value={temperament.name}>{temperament.name}</option>
+                ))}
+              </select>
+            </div>
+            <p></p>
+          </div>
+          {input.alltemperament.map((e) => (
+            <div  >
+              <p  >{e}</p>
+              <button
+                type='button'
+                
+                 >
+                X
+              </button>
+            </div>
+          ))} 
+          <label  value="temperament" name="temperament" >
+                {" "}
+                Temperament:{" "}
+              </label>
+              <select
+               
+              >
+                <option>Temperaments</option>
+                {alltemperament &&
+                  alltemperament.map((e) => (
+                    <option key={e.id} value={e.name}>
+                      {e.name}
+                    </option>
+                  ))}
+              </select>
+              
+        </div>
+    </form>
+    
+</div>
+
+    )
+}*/}
+
+
+
+
+
+
+
+
+
+
+
+{/*import React,{useEffect} from'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useParams,useNavigate} from 'react-router-dom';
+import {getDetail} from '../actions';
+
+
+export default function Detail () {
+    const dispatch = useDispatch();
+    const paramas = useParams();
+    const navigate = useNavigate();
+    const details= useSelector((state) => state.detail)
+
+    useEffect(()=>{
+        let dogsId = paramas.id;
+        dispatch(getDetail(dogsId));
+    },[dispatch,paramas.id])
+
+    const navegacion =() =>{
+        navigate("/home")
+    }
+
+    return (
+        <div >
+          {
+            details? (
+            details.map((e,i)=>(
+              <div  key={i}> 
+               <h1 >Name:{e.name}</h1>
+               
+               <h3>Height:{e.height}CM</h3>
+               <h3>Weight:{e.weight}KG</h3>
+               <h3>life_span:{e.life_span}</h3>
+               
+               <imagen src={e.imagen} alt="img not found" />
+               <h1 >TEMPERAMENTS</h1>
+               {
+                 e.temperament.length? 
+                 e.temperament.map((c,i)=>(
+                   <div  key={i}> 
+                     
+                     <h2>Name of the temperament:{c.temperament}</h2>
+                    
+                   </div>
+                 )) : 
+                 <h2>Undefined</h2>
+               }
+               <button  onClick={navegacion}>Back</button>
+              </div>
+            ))
+      ) : (
+               <p>Loading...</p>
+      )
+          }
+        </div>
+      )
+    
+        }*/}
