@@ -65,7 +65,7 @@ export default function DogBreedCreated() {
     image: "",
     temperament: [],
   });
-
+  
   function handleChange(e) {
     setInput({
       ...input,
@@ -140,10 +140,10 @@ export default function DogBreedCreated() {
 
   return (
     <div className={style.container} >
-      <h1 className={style.title}>Let's create something new!</h1>
+      <h1 className={style.title}>CREEMOS ALGO NUEVO!</h1>
       <div className={style.todo} >
       <Link to="/home" >
-        <button className={style.btn}> Go home</button>
+        <button className={style.btn}> Ir a la home</button>
       </Link>
       
         <form className={style.form}
@@ -299,7 +299,7 @@ export default function DogBreedCreated() {
           </div>
           <div >
             <button type="submit" className={style.cre} >
-              Create
+              Crear
             </button>
           </div>
         </form>

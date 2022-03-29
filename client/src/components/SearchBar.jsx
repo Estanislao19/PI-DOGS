@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import { getSearch,getDogs } from '../actions';
+import { getSearch} from '../actions';
 import style from './SearchBar.module.css';
 export default function SearchBar () {
     const dispatch = useDispatch();
@@ -15,18 +15,13 @@ export default function SearchBar () {
 
     function handleSubmit(e){ // el name va a ser mi estado local
         e.preventDefault();
-        if(name.length > 4 ){
             dispatch(getSearch(name));
             setName({
                 name:"",
                 
             })
-        }else{
-            alert('no hay perro')
-        dispatch(getDogs());
-        
     }
-}
+
 
 
     

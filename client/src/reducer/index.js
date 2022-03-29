@@ -44,7 +44,7 @@ switch(action.type){
         const filterCreated = action.payload === 'created' ? allDogs.filter (el => el.createdInDb) : allDogs.filter(el => !el.createdInDb)
         return {
             ...state,
-            dogs: action.payload === 'All'? state.allDogs : filterCreated
+            dogs: filterCreated
         }
          case 'POST_DOGS':
              return {
@@ -115,30 +115,9 @@ switch(action.type){
                                ...state,
                                dogs:can
                            }
-                           case 'FILTER_HEIGHT':
-                               let hei = action.payload === 'altura_maxima' ? 
-                               state.dogs.sort(function(a,b){
-                                   if(a.height > b.height){
-                                       return 1;
-                                   }
-                                   if(a.height < b.height){
-                                       return -1;
-                                   }
-                                   return 0;
-                               }):
-                               state.dogs.sort(function(a,b){
-                                   if(a.height > b.height){
-                                       return -1;
-                                   }
-                                   if(a.height < b.height){
-                                       return 1;
-                                   }
-                                   return 0;
-                               })
-                               return{
-                                   ...state,
-                                   dogs:hei
-                               }
+
+                        
+                          
                        
 
         default:

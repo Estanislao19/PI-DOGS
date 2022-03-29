@@ -1,14 +1,5 @@
 import axios from 'axios';
 
-/*export function getDogs () {
-    return async function (dispatch){
-        var json= await axios.get('http://localhost:3001/dogs')
-        return dispatch({
-            type:'GET_DOGS',
-            payload:json.data
-        })
-    }
-}*/
 
 export function getDogs() {
 return  function (dispatch){
@@ -50,24 +41,21 @@ export function filtertemeperament (payload){
     }
 }
 export function getSearch (name){
-    return async function(dispatch){
-        var json = await axios.get('http://localhost:3001/dogs?name=' + name);
-        return dispatch({
-            type:'GET_SEARCH',
-            payload:json.data
-        })
-    }
+   
+   return function (dispatch){
+       axios.get('http://localhost:3001/dogs?name=' + name)
+       .then(res=>{
+           dispatch({
+               type:'GET_SEARCH',
+               payload:res.data
+               
+           })
+       }).catch(error=>
+        alert('no se encuentra el perro que estas buscando'))
+   }
+   
 }
-/*export function getTemperament () {
-    return async function (dispatch) { 
 
-    var json =await axios.get('http://localhost:3001/temperament')
-    return dispatch({
-        type:'GET_TEMPERAMENT',
-        payload:json.data
-    })
-    }
-}*/
 export function getTemperament () {
     return function (dispatch) {
         axios.get('http://localhost:3001/temperament')
@@ -85,24 +73,7 @@ export function postDogs (payload){
         return json
       }
     }
-/*export function postDogs (payload) {
-    axios({
-        ulr:'http://localhost:3001/dog',
-        method:'POST',
-        data:payload
-    }).then(function (response) {
-        console.log(response.data)
-    })
-} */
-/*axios({
-    url: 'data.php',
-    method: 'POST',
-    data: data
-}).then(function (response) {
-    console.log(response.data);
-}).catch(function (error) {
-    console.log(error.response.statusText);
-});*/
+
        
 export  function getDetail (id) {
     return async function (dispatch) {
@@ -116,7 +87,8 @@ export  function getDetail (id) {
     
     
 }
-   
+
+
 export function filterByTemeperament (payload) {
     return {
         type:'FILTER_TEMPERAMENT',
@@ -136,7 +108,7 @@ export function filterDogue (payload) {
         payload
     }
 }
-export function filterHeight (payload) {
+export function filterHeight(payload){
     return{
         type:'FILTER_HEIGHT',
         payload

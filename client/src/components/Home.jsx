@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { useState,useEffect } from 'react';
 import {Link} from 'react-router-dom';
-import { filterCreated, filterHeight, filterOrderName, filterOrderWeight, getDogs, } from '../actions';
+import { filterCreated,filterOrderName, filterOrderWeight, getDogs} from '../actions';
 import Card from './Card';
 import Paginado from './Paginado';
 import SearchBar from './SearchBar';
@@ -23,9 +23,8 @@ export default function Home (){
    const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);//0/8 (el ultimo es excluyente, por eso hay 8 del 0 al 7)
    const [orderAZ,setOrderAZ] =useState('');
    const [order,setOrder] =useState('');
-   const [orderr,setOrderH] =useState('')
-  // const allTemp = useSelector((state) => state.temperament)
- // console.log('io', allTemp)
+   
+
    
 
    
@@ -48,6 +47,7 @@ export default function Home (){
         setOrderAZ(`Ordenado ${e.target.value}`);
     }
     function handleFilterCreated(e){
+      setCurrentPage(1)
         dispatch(filterCreated(e.target.value))
         
     }
@@ -57,39 +57,34 @@ export default function Home (){
         dispatch(filterOrderWeight(e.target.value))
         setOrder(`Ordenado ${e.target.value}`)
     }
-    function handlefilterHeight(e){
-      dispatch(filterHeight(e.target.value))
-      setOrderH(`ordenado${e.target.value}`)
-    }
-  
+    
+ 
     
 
     return(
         <div className={style.container}>
             <Link to ='/dogs' className={style.cree}>Crear una nueva raza de perro</Link>
-            <h1 className={style.title}>MI PAGINA DE PERROS</h1>
+            <h1 className={style.title}>PAGINA DE PERROS</h1>
             <SearchBar/>
             <button className={style.carg} onClick={e=> {handleClick(e)}}>Volver a cargar todos los perros</button>
             
             <div>
                 <select  className={style.az} onChange={(e)=>handleFilterOrderName(e)}> 
-                    
-                    <option value="asc"> A-Z </option>
-                    <option value="desc">Z-A</option>
+                    <option value="" >Ordenamiento alfabetico de las razas de los perros</option>
+                    <option value="asc">  A-Z</option>
+                    <option value="desc">  Z-A</option>
                 </select>
                 <select className={style.az} onChange={(e)=>handleFilterCreated(e)}>
                
-                  <option value="api">Existing</option>
-                  <option value="created">Created</option>
+                  <option value="api">Razas existentes</option>
+                  <option value="created">Razas creadas por nosotros</option>
                 </select>
                 <select className={style.az}onChange={(e)=>handlefilterOrderWeight(e)}>
-                <option value="menor_mayor">Mayor a menor peso</option>
+                  <option value="">Ordenamiento de las razas de perro por peso</option>
+                <option value="menor_mayor"> Mayor a menor peso</option>
             <option value="mayor_menor">menor a mayor peso</option>
                 </select>
-                {/*<select onChange={(e) =>handlefilterHeight(e)}>
-                <option value="altura_maxima">altura maxima</option>
-                <option value="altura_minima">altura minima</option>
-    </select>*/}
+              
               
           
               <Breedofdog/>
@@ -110,7 +105,7 @@ export default function Home (){
                   image={e.image}
                   temperament={ e.temperament}
                  weight={e.weight }
-                  //height={ e.height }
+                
                 />
               </Link>
             </div>
