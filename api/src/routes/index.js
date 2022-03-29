@@ -25,25 +25,7 @@ const getApiInfo = async() => {
     })
     return apiInfo
 };
-/*const getApiInfo = ()=>{
-    axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
-    .then( res=>{
-     const api = res.data.map(el=>{
-         console.log(api)
-         return{
-            name: el.name,
-            id: el.id,
-            image: el.image.url,
-            temperament: el.temperament,
-            weight: el.weight.metric,
-            height: el.height.metric,
-            life_span: el.life_span,
-         }
-     })
-    return api
-     
-    })
-}*/
+
 
 
 const getDbInfo = async () =>{
@@ -58,6 +40,7 @@ const getDbInfo = async () =>{
         }
     })
 }
+
 const Alldogs =async () =>{
     const apiInfo = await getApiInfo();
     const dbInfo = await getDbInfo();
@@ -75,6 +58,8 @@ router.get('/dogs',async(req,res)=>{
         res.status(200).send(dogsTotal)
     }
 });
+
+
 
 router.get('/temperament',async(req,res)=>{
 let ApiTemperament = await axios.get( `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
@@ -113,8 +98,8 @@ router.post('/dog', async (req,res) => {
             });
 
 
-            router.get ('/dogs/:id', async (req, res) => {
-                const id = req.params.id;
+   router.get ('/dogs/:id', async (req, res) => {
+    const id = req.params.id;
                 const dogTotal = await Alldogs()
                 if (id) {
                     let dogId = dogTotal.filter( el => el.id == id)     
