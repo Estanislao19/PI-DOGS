@@ -30,16 +30,16 @@ const getApiInfo = async() => {
 
 const getDbInfo = async () =>{
     return await Dog.findAll({
-        includes:{
+        include:[
+        {
             model:Temperament,
-            attribute:['name'],
-            through:{
-                attribute:[],
-            }
+          
 
         }
+    ]
     })
 }
+
 
 const Alldogs =async () =>{
     const apiInfo = await getApiInfo();
@@ -63,7 +63,7 @@ router.get('/dogs',async(req,res)=>{
 
 router.get('/temperament',async(req,res)=>{
 let ApiTemperament = await axios.get( `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
-let temperaments = ApiTemperament.data.map(el=>el.temperament)
+let temperaments = await ApiTemperament.data.map(el=>el.temperament)
 temperaments = temperaments.join().split(",");
 
 temperaments.forEach((e)=>{
@@ -72,12 +72,12 @@ temperaments.forEach((e)=>{
     })
 })
     const allTemperaments = await Temperament.findAll();
-  res.send(allTemperaments);
+  res.status(200).send(allTemperaments);
 
 });
 
 router.post('/dog', async (req,res) => { 
-    let {name, weight,height, temperament, life_span, image, createdInDb}= req.body
+    let {name, weight,height,temperaments, life_span, image}= req.body
     // Creo la nueva raza en la BD
     let createdDog = await Dog.create ({
         name,
@@ -85,33 +85,41 @@ router.post('/dog', async (req,res) => {
         height,
         life_span,
         image,
-        createdInDb
+        
+        temperaments
+       
     })
     // El temperamento lo saco de la base de datos cargada previamente con la info de la API
-       let temperamentDb = await Temperament.findAll ({
+       temperaments.forEach(e=>{
+           Temperament.findOrCreate({
+               where:{
+                   name:e
+               }
+           })
+       })
+       let dale = await Temperament.findAll({
         where: {
-            name:temperament } 
-        })
+            name: temperaments.map(e => e)
+        }
+    })
         // Agrega el temperamento a la raza creada
-        createdDog.addTemperament(temperamentDb)
-        res.send (createdDog)
+        createdDog.addTemperament(dale)
+        res.send ('videogamecreado')
             });
 
 
    router.get ('/dogs/:id', async (req, res) => {
-    const id = req.params.id;
-                const dogTotal = await Alldogs()
-                if (id) {
-                    let dogId = dogTotal.filter( el => el.id == id)     
-                    dogId.length?
-                    res.status(200).json(dogId) :
-                    res.status(404).send('Dog not found')
-                }
-            })
+      const id = req.params.id;
+      const dogTotal = await Alldogs()
+      if (id) {
+      let dogId = dogTotal.filter( el => el.id == id)     
+      dogId.length? res.status(200).json(dogId) :
+      res.status(404).send('Dog not found')           
+        }
+        })
 
-
-
-
-
+        
+      
 
 module.exports = router;
+

@@ -62,23 +62,23 @@ switch(action.type){
                  }
 
             case "FILTER_BY_ORDER_WEIGHT":
-                let sorted_Arr =action.payload === "mayor_menor" ?
+                let sorted_Arr =action.payload === "menor_mayor" ?
                    state.dogs.sort(function (a, b) {
                    
                         if (a.weight > b.weight) {
-                            return 1;
+                            return -1;
                         }
                         if (a.weight < b.weight) {
-                            return -1;
+                            return 1;
                         }
                         return 0;
                     })
                     : state.dogs.sort(function (a, b) {
                         if(a.weight >b.weight) {
-                            return -1;
+                            return 1;
                         }
                         if(a.weight < b.weight) {
-                            return 1;
+                            return -1;
                         }
                         return 0;
                     });
@@ -87,6 +87,7 @@ switch(action.type){
                   dogs: sorted_Arr,
                 };
                 case 'FILTER_BY_TEMPERAMENT':
+              
             const tempDogs = state.allDogs
                 let tempFiltered = tempDogs.filter( e => {
                     if(e.temperament) {
@@ -115,6 +116,18 @@ switch(action.type){
                                ...state,
                                dogs:can
                            }
+                   
+                        case 'RESET_DOGS':
+                            return{
+                                ...state,
+                                detail:[]
+                            }
+                  case 'RESET_PAGINADO':
+                      return{
+                          ...state,
+                          
+                    
+                      }
 
                         
                           

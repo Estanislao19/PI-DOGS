@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { filterDogue} from '../actions';
 import style from './Breedofdog.module.css';
@@ -8,7 +8,7 @@ import style from './Breedofdog.module.css';
 export default function Breedofdog () {
     const dispatch= useDispatch();
     const alldog = useSelector((state) => state.dogs)
-    
+    const [currentPage, setCurrentPage] = useState(1);
     let razadedog = alldog.map(e =>{
         let re = e.name.split('').join('');
         let perr = re
@@ -19,6 +19,7 @@ export default function Breedofdog () {
 
     function handlefiltergogue (e) {
         dispatch(filterDogue(e.target.value));
+       setCurrentPage(1)
    }
 
 return(

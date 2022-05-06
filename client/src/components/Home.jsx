@@ -2,13 +2,13 @@ import React from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { useState,useEffect } from 'react';
 import {Link} from 'react-router-dom';
-import { filterCreated,filterOrderName, filterOrderWeight, getDogs} from '../actions';
+import { filterCreated,filterDogue,filterOrderName, filterOrderWeight, filtertemeperament, getDogs, getTemperament, resetPaginado} from '../actions';
 import Card from './Card';
 import Paginado from './Paginado';
 import SearchBar from './SearchBar';
-import FiltTemperament from './FiltTemperament';
-import Breedofdog from './Breedofdog';
+
 import style from './Home.module.css';
+
 
 
 
@@ -23,11 +23,9 @@ export default function Home (){
    const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);//0/8 (el ultimo es excluyente, por eso hay 8 del 0 al 7)
    const [orderAZ,setOrderAZ] =useState('');
    const [order,setOrder] =useState('');
+   const allTemperament = useSelector((state) => state.temperament)
    
 
-   
-
-   
     const paginado=(pageNumber) =>{
         setCurrentPage(pageNumber)
     }
@@ -37,29 +35,48 @@ export default function Home (){
     },[dispatch]);
     
     function handleClick (e) {
-        e.preventDefault();
+      
         dispatch(getDogs());
+       
     } 
     function handleFilterOrderName (e) {
-      e.preventDefault();
+      
         dispatch(filterOrderName(e.target.value))
-     
         setOrderAZ(`Ordenado ${e.target.value}`);
-    }
-    function handleFilterCreated(e){
-      setCurrentPage(1)
-        dispatch(filterCreated(e.target.value))
         
     }
+    function handleFilterCreated(e){
+        setCurrentPage(1)
+        dispatch(filterCreated(e.target.value))
+       
+    }
     function handlefilterOrderWeight(e){
-      e.preventDefault();
-      
+     
         dispatch(filterOrderWeight(e.target.value))
         setOrder(`Ordenado ${e.target.value}`)
     }
-    
+    let razadedog = allDogs.map(e =>{
+      let re = e.name.split('').join('');
+      let perr = re
+      return perr
+  })
+  const allraza = [...new Set(razadedog)]
+  
+
+  function handlefiltergogue (e) {
+      dispatch(filterDogue(e.target.value));
+     setCurrentPage(1)
+ }
  
-    
+ useEffect(() => {
+  dispatch(getTemperament())
+},[dispatch])
+
+function handleChange(e) {
+dispatch(filtertemeperament(e.target.value))
+setCurrentPage(1)
+}
+
 
     return(
         <div className={style.container}>
@@ -70,30 +87,41 @@ export default function Home (){
             
             <div>
                 <select  className={style.az} onChange={(e)=>handleFilterOrderName(e)}> 
-                    <option value="" >Ordenamiento alfabetico de las razas de los perros</option>
-                    <option value="asc">  A-Z</option>
-                    <option value="desc">  Z-A</option>
+                    <option >Ordenamiento alfabetico de las razas de los perros</option>
+                    <option value="asc"> A-Z</option>
+                    <option value="desc"> Z-A</option>
                 </select>
                 <select className={style.az} onChange={(e)=>handleFilterCreated(e)}>
                
-                  <option value="api">Razas existentes</option>
+                  <option value="all">Razas existentes</option>
                   <option value="created">Razas creadas por nosotros</option>
                 </select>
-                <select className={style.az}onChange={(e)=>handlefilterOrderWeight(e)}>
-                  <option value="">Ordenamiento de las razas de perro por peso</option>
+                <select  className={style.az}onChange={(e)=>handlefilterOrderWeight(e)}>
+                  <option >Ordenamiento de las razas de perro por peso</option>
                 <option value="menor_mayor"> Mayor a menor peso</option>
             <option value="mayor_menor">menor a mayor peso</option>
                 </select>
-              
+                
               
           
-              <Breedofdog/>
+                <select className={style.raza}onChange={(e)=> handlefiltergogue(e)}>
+            <option value="" >Razas</option>
+            <option value="all">Todas las razas de perro</option>
+            {allraza.map((e)=> 
+            <option name={e}>{e}</option>)}
+            
+        </select>
+       
                 <Paginado
           dogsPerPage={dogsPerPage}
           allDogs={allDogs.length}
           paginado={paginado}
+          setCurrentPage={setCurrentPage}
         />
-        <FiltTemperament/>
+       { <select className={style.temperament}onChange={(e) => handleChange(e)}>
+        <option >Filtro por temperamento</option>
+        {allTemperament?.map(e=>(<option value='all' key={e.id} value={e.name}>{e.name}</option>))}
+            </select>}
       </div>
       <div >
         {currentDogs?.map((e) => {
@@ -105,7 +133,7 @@ export default function Home (){
                   image={e.image}
                   temperament={ e.temperament}
                  weight={e.weight }
-                
+                  
                 />
               </Link>
             </div>
